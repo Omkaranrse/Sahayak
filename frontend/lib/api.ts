@@ -14,6 +14,9 @@ interface ApiScheme {
   application_portal: string | null;
   portal_name: string | null;
   last_verified: string | null;
+  how_to_apply_steps?: string[];
+  youtube_video_id?: string | null;
+  video_title?: string | null;
 }
 
 interface ApiMatchItem {
@@ -45,6 +48,9 @@ function toScheme(s: ApiScheme): Scheme {
     documents: s.documents_required ?? [],
     portalUrl: s.application_portal ?? "#",
     portalName: s.portal_name ?? "official portal",
+    howToApplySteps: s.how_to_apply_steps ?? [],
+    youtubeVideoId: s.youtube_video_id ?? undefined,
+    videoTitle: s.video_title ?? undefined,
   };
 }
 

@@ -12,6 +12,9 @@ export interface Scheme {
   documents: string[];
   portalUrl: string;
   portalName: string;
+  howToApplySteps?: string[];
+  youtubeVideoId?: string;
+  videoTitle?: string;
 }
 
 export interface BridgeRecommendation {

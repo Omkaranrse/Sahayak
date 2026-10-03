@@ -9,7 +9,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from contextlib import asynccontextmanager
-from . import models, schemas, matching, llm, seva_kendras
+from . import models, schemas, matching, llm, seva_kendras, tutorials
 from .config import settings
 from .database import get_db, Base, engine
 
@@ -94,7 +94,16 @@ def health(db: Session = Depends(get_db)):
 
 @app.get("/api/schemes", response_model=list[schemas.SchemeOut])
 def list_schemes(db: Session = Depends(get_db)):
-    return db.query(models.Scheme).all()
+    schemes = db.query(models.Scheme).all()
+    results = []
+    for s in schemes:
+        tut = tutorials.get_scheme_tutorial(s.scheme_id)
+        out = schemas.SchemeOut.model_validate(s)
+        out.how_to_apply_steps = tut.get("how_to_apply_steps", [])
+        out.youtube_video_id = tut.get("youtube_video_id")
+        out.video_title = tut.get("video_title")
+        results.append(out)
+    return results
 
 
 @app.post("/api/profile", response_model=schemas.ProfileOut)
@@ -231,4 +240,10 @@ def get_scheme(scheme_id: str, db: Session = Depends(get_db)):
     scheme = db.query(models.Scheme).filter_by(scheme_id=scheme_id).first()
     if not scheme:
         raise HTTPException(status_code=404, detail="Scheme not found")
-    return scheme
+    
+    tut = tutorials.get_scheme_tutorial(scheme.scheme_id)
+    out = schemas.SchemeOut.model_validate(scheme)
+    out.how_to_apply_steps = tut.get("how_to_apply_steps", [])
+    out.youtube_video_id = tut.get("youtube_video_id")
+    out.video_title = tut.get("video_title")
+    return out

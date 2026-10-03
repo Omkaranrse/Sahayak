@@ -7,6 +7,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { DocumentChecklist } from "@/components/document-checklist";
 import { DocumentReadinessChecker } from "@/components/document-readiness-checker";
+import { SchemeApplicationGuide } from "@/components/scheme-application-guide";
 import { EligibilityBadge } from "@/components/eligibility-badge";
 import { getScheme } from "@/lib/api";
 import { Scheme } from "@/lib/types";
@@ -84,6 +85,15 @@ export default function SchemeDetailPage({ params }: { params: { id: string } })
 
             <section className="space-y-6">
               <DocumentReadinessChecker documents={scheme.documents} />
+              
+              <SchemeApplicationGuide
+                schemeName={scheme.name}
+                portalUrl={scheme.portalUrl}
+                portalName={scheme.portalName}
+                steps={scheme.howToApplySteps}
+                youtubeVideoId={scheme.youtubeVideoId}
+                videoTitle={scheme.videoTitle}
+              />
             </section>
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3">

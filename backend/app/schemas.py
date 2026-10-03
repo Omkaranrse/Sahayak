@@ -49,6 +49,9 @@ class SchemeOut(BaseModel):
     application_portal: Optional[str] = None
     portal_name: Optional[str] = None
     last_verified: Optional[date] = None
+    how_to_apply_steps: list[str] = []
+    youtube_video_id: Optional[str] = None
+    video_title: Optional[str] = None
 
 
 # ---- Bridge Recommendation for Near Misses ----
