@@ -1,0 +1,146 @@
+[
+  {
+    "scheme_id": "pmkisan",
+    "name": "PM-KISAN",
+    "level": "central",
+    "state": null,
+    "category": "Agriculture",
+    "eligibility_rules": {
+      "occupation": ["farmer"],
+      "requires_land_ownership": true,
+      "excluded_if": ["income_tax_payer"]
+    },
+    "benefit": "₹6,000 per year, paid in 3 installments directly to your bank account",
+    "explanation_template": "Landholding farmers receive direct income support in three installments a year.",
+    "documents_required": ["Aadhaar card", "Land ownership records", "Bank passbook", "Passport-size photo"],
+    "application_portal": "https://pmkisan.gov.in",
+    "portal_name": "pmkisan.gov.in",
+    "source_url": "https://pmkisan.gov.in",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "pmjay",
+    "name": "Ayushman Bharat – PM-JAY",
+    "level": "central",
+    "state": null,
+    "category": "Healthcare",
+    "eligibility_rules": {
+      "income_max_annual": 250000
+    },
+    "benefit": "₹5,00,000 health cover per family, per year, cashless at listed hospitals",
+    "explanation_template": "Households below the income threshold get cashless hospital treatment up to ₹5 lakh a year.",
+    "documents_required": ["Aadhaar card", "Ration card", "Income certificate"],
+    "application_portal": "https://pmjay.gov.in",
+    "portal_name": "pmjay.gov.in",
+    "source_url": "https://pmjay.gov.in",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "ujjwala",
+    "name": "Pradhan Mantri Ujjwala Yojana",
+    "level": "central",
+    "state": null,
+    "category": "Household",
+    "eligibility_rules": {
+      "gender": "female",
+      "income_max_annual": 200000
+    },
+    "benefit": "Free LPG connection with first refill and stove",
+    "explanation_template": "Women from low-income households get a free gas connection, no security deposit required.",
+    "documents_required": ["Aadhaar card", "BPL ration card", "Bank passbook"],
+    "application_portal": "https://pmuy.gov.in",
+    "portal_name": "pmuy.gov.in",
+    "source_url": "https://pmuy.gov.in",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "nsap-old-age",
+    "name": "National Social Assistance Programme (Old Age Pension)",
+    "level": "central",
+    "state": null,
+    "category": "Pension",
+    "eligibility_rules": {
+      "age_min": 60,
+      "income_max_annual": 150000
+    },
+    "benefit": "₹200–500 monthly pension credited directly to your account",
+    "explanation_template": "Senior citizens within the income limit receive a monthly pension.",
+    "documents_required": ["Aadhaar card", "Age proof", "BPL certificate", "Bank passbook"],
+    "application_portal": "https://nsap.nic.in",
+    "portal_name": "nsap.nic.in",
+    "source_url": "https://nsap.nic.in",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "pmegp",
+    "name": "Prime Minister's Employment Generation Programme",
+    "level": "central",
+    "state": null,
+    "category": "Employment",
+    "eligibility_rules": {
+      "age_min": 18,
+      "occupation": ["self_employed", "unemployed"]
+    },
+    "benefit": "Subsidy of 15–35% on projects up to ₹50 lakh (manufacturing) or ₹20 lakh (services)",
+    "explanation_template": "Aspiring entrepreneurs above 18 can get a subsidized loan to start a small business.",
+    "documents_required": ["Aadhaar card", "Educational certificate", "Project report", "Bank passbook"],
+    "application_portal": "https://www.kviconline.gov.in/pmegpeportal",
+    "portal_name": "kviconline.gov.in",
+    "source_url": "https://www.kviconline.gov.in/pmegpeportal",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "sukanya-samriddhi",
+    "name": "Sukanya Samriddhi Yojana",
+    "level": "central",
+    "state": null,
+    "category": "Savings",
+    "eligibility_rules": {
+      "gender": "female",
+      "age_max": 10
+    },
+    "benefit": "High-interest savings account for a girl child, maturing at age 21",
+    "explanation_template": "Parents of a girl child under 10 can open a high-interest government savings account in her name.",
+    "documents_required": ["Girl's birth certificate", "Parent/guardian Aadhaar card", "Address proof"],
+    "application_portal": "https://www.india.gov.in/sukanya-samriddhi-yojana",
+    "portal_name": "india.gov.in",
+    "source_url": "https://www.india.gov.in/sukanya-samriddhi-yojana",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "disability-pension",
+    "name": "National Disability Pension Scheme",
+    "level": "central",
+    "state": null,
+    "category": "Pension",
+    "eligibility_rules": {
+      "requires_disability": true,
+      "income_max_annual": 150000
+    },
+    "benefit": "₹300–500 monthly pension for persons with 80%+ disability",
+    "explanation_template": "Persons with a registered disability and income under the limit receive a monthly pension.",
+    "documents_required": ["Aadhaar card", "Disability certificate", "Income certificate", "Bank passbook"],
+    "application_portal": "https://nsap.nic.in",
+    "portal_name": "nsap.nic.in",
+    "source_url": "https://nsap.nic.in",
+    "last_verified": "2026-07-01"
+  },
+  {
+    "scheme_id": "mh-shramik-karmakar",
+    "name": "Maharashtra Building & Other Construction Workers Welfare Scheme",
+    "level": "state",
+    "state": "Maharashtra",
+    "category": "Labour welfare",
+    "eligibility_rules": {
+      "state": "Maharashtra",
+      "occupation": ["daily_wage"]
+    },
+    "benefit": "Medical assistance, education scholarships for children, and accident cover",
+    "explanation_template": "Registered construction workers in Maharashtra get medical, education, and accident benefits.",
+    "documents_required": ["Aadhaar card", "Work certificate from contractor/employer", "Bank passbook"],
+    "application_portal": "https://mahabocw.in",
+    "portal_name": "mahabocw.in",
+    "source_url": "https://mahabocw.in",
+    "last_verified": "2026-07-01"
+  }
+]

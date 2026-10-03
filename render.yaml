@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: sahayak-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./entrypoint.sh
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sahayak-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: "http://localhost:3000,https://*.vercel.app"
+      - key: GROQ_API_KEY
+        sync: false
+      - key: GROQ_MODEL
+        value: "llama-3.1-8b-instant"
+
+databases:
+  - name: sahayak-db
+    plan: free
+    databaseName: sahayak
+    user: sahayak
