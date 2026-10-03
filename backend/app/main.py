@@ -8,9 +8,10 @@ from slowapi.util import get_remote_address
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from contextlib import asynccontextmanager
 from . import models, schemas, matching, llm, seva_kendras
 from .config import settings
-from .database import get_db
+from .database import get_db, Base, engine
 
 logging.basicConfig(
     level=logging.INFO,
@@ -18,12 +19,26 @@ logging.basicConfig(
 )
 logger = logging.getLogger("sahayak.api")
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    try:
+        Base.metadata.create_all(bind=engine)
+        from .seed import run as seed_run
+        seed_run()
+        logger.info("Database tables initialized and schemes seeded successfully.")
+    except Exception as exc:
+        logger.warning("Auto-init database skipped or failed on startup: %s", exc)
+    yield
+
+
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
     title="Sahayak API",
     description="Matches user profiles & households against verified government scheme rules.",
     version="0.2.0",
+    lifespan=lifespan,
 )
 
 app.state.limiter = limiter
