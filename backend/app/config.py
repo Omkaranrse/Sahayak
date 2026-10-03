@@ -9,6 +9,13 @@ class Settings(BaseSettings):
     groq_model: str = "llama-3.1-8b-instant"
     cors_origins: Union[List[str], str] = ["http://localhost:3000"]
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def assemble_db_url(cls, v):
+        if isinstance(v, str) and v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql://", 1)
+        return v
+
     @field_validator("cors_origins", mode="before")
     @classmethod
     def assemble_cors_origins(cls, v):
