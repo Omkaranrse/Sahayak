@@ -1,10 +1,8 @@
 services:
   - type: web
     name: sahayak-backend
-    env: python
-    rootDir: backend
-    buildCommand: pip install -r requirements.txt
-    startCommand: ./entrypoint.sh
+    env: docker
+    dockerfilePath: Dockerfile
     plan: free
     healthCheckPath: /
     envVars:
