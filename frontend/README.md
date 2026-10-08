@@ -1,66 +1,72 @@
-# Sahayak — Government Scheme Eligibility Assistant
+# Sahayak — Frontend (Next.js 14)
 
-Frontend built with Next.js 14 (App Router) + TypeScript + Tailwind CSS.
+Production frontend client for Sahayak built with Next.js 14 (App Router), TypeScript, and Tailwind CSS.
 
-## Run it
+## 🚀 Getting Started
 
 ```bash
+# Install dependencies
 npm install
+
+# Configure environment (optional, defaults to http://localhost:8000)
+cp .env.local.example .env.local
+
+# Run development server
 npm run dev
 ```
 
-Open http://localhost:3000. (First build needs internet access once, to fetch
-Manrope / Inter / IBM Plex Mono from Google Fonts via `next/font`.)
+Open [http://localhost:3000](http://localhost:3000) in your browser. (The first build will download Google Fonts: Manrope, Inter, and IBM Plex Mono).
 
-## What's here
+---
+
+## 📂 Architecture & Directory Layout
 
 ```
-app/
-  page.tsx                landing page (hero, trust strip, how-it-works, preview)
-  intake/page.tsx          3-step profile form with validation + stepper
-  results/page.tsx         skeleton loading state -> eligible / near-miss sections
-  schemes/[id]/page.tsx     full scheme detail + document checklist
-  layout.tsx, globals.css  fonts, design tokens, base styles
-components/
-  site-header.tsx, language-switcher.tsx, theme-toggle.tsx
-  progress-stepper.tsx, scheme-card.tsx, eligibility-badge.tsx, document-checklist.tsx
-  ui/button.tsx, ui/field.tsx   (TextField, SelectField, ToggleRow)
-lib/
-  types.ts                 shared TS types (Scheme, ProfileData, MatchResult)
-  mock-data.ts              placeholder scheme data — swap for your FastAPI backend
-  language-context.tsx      EN / HI / MR translation dictionary + provider
+frontend/
+├── app/
+│   ├── page.tsx                       # Landing page (hero, trust strip, feature preview)
+│   ├── intake/page.tsx                # 3-step intake form with Web Speech API voice input & household members
+│   ├── results/page.tsx               # Results dashboard, skeleton states, Passbook modal, CSC locator
+│   ├── schemes/[id]/page.tsx          # Full scheme detail, YouTube video guide & document readiness checker
+│   ├── layout.tsx, globals.css        # Fonts, theme variables, base styles, animations
+├── components/
+│   ├── csc-passbook-modal.tsx         # Printable A4 Passbook slip modal with QR code & checklist
+│   ├── document-checklist.tsx         # Interactive required document checklist
+│   ├── document-readiness-checker.tsx # Pre-flight document check + Aadhaar DBT bank linking
+│   ├── eligibility-badge.tsx          # Seal badge for eligible / near-miss states
+│   ├── language-switcher.tsx          # Dynamic language switcher (English, Hindi, Marathi)
+│   ├── progress-stepper.tsx           # Stepper for 3-step demographic intake
+│   ├── scheme-application-guide.tsx   # Step-by-step form filling guides + embedded YouTube player
+│   ├── scheme-card.tsx                # Scheme card with benefit tag, gap explanation & action buttons
+│   ├── seva-kendra-locator.tsx        # Seva Kendra & CSC finder with Google Maps routing
+│   ├── site-header.tsx, theme-toggle.tsx
+│   ├── voice-input-button.tsx         # Voice recording button with Web Speech API & sample prompts
+│   └── ui/                            # Button, TextField, SelectField, ToggleRow primitives
+└── lib/
+    ├── api.ts                         # Typed API client connecting to FastAPI backend
+    ├── language-context.tsx           # Multi-language dictionary and context (EN / HI / MR)
+    ├── types.ts                       # TypeScript interfaces for schemes, profiles, matches, CSCs
+    └── mock-data.ts                   # Fallback preview dataset
 ```
 
-## Design system
+---
 
-- **Palette**: deep indigo/blue primary (`--primary-*`), emerald for eligible states,
-  amber for near-miss states — all defined as RGB-triplet CSS variables in
-  `globals.css` so light/dark mode is a single class toggle (`.dark` on `<html>`).
-- **Type scale**: Manrope for display/headline, Inter for body/UI, IBM Plex Mono
-  for stats and numbers — see `fontSize` in `tailwind.config.ts`.
-- **Signature motif**: a stamp/seal shape (`rounded-seal`) used for the
-  `EligibilityBadge`, and a dotted "perforation" divider (`.perforation` in
-  `globals.css`) referencing the tear-off paper forms this product replaces.
-- **Motion**: `animate-rise-in` (staggered card entrance), `animate-seal-stamp`
-  (badge reveal), `.shimmer` (skeleton loaders) — all respect
-  `prefers-reduced-motion`.
+## 🎨 Design System
 
-## Wiring up the real backend
+- **Palette**: Deep civic indigo/blue primary (`--primary-*`), emerald for eligible status, and amber for near-miss states. All defined as RGB-triplet CSS variables in `globals.css` for instant light/dark mode toggling.
+- **Typography**: Manrope for display headings, Inter for body/UI, and IBM Plex Mono for benefit numbers and statistics.
+- **Visual Accents**: Official citizen seal motif (`rounded-seal`), tear-off perforation divider (`.perforation`), and fluid entrance micro-animations (`animate-rise-in`, `animate-seal-stamp`, `shimmer`).
+- **Accessibility**: Native `prefers-reduced-motion` support across all CSS keyframes and high-contrast color pairings.
 
-Everything currently reads from `lib/mock-data.ts`. To connect the FastAPI
-backend described earlier in this project:
+---
 
-1. Replace the `mockMatches` import in `app/results/page.tsx` with a fetch to
-   `GET /api/match/{profile_id}`.
-2. In `app/intake/page.tsx`, on final submit, `POST` the `ProfileData` object to
-   `/api/profile`, then route to `/results?profileId=<id>` instead of `/results`.
-3. `lib/types.ts` already mirrors the Postgres/Pydantic shape from the backend
-   plan, so field names should line up directly.
+## 🔗 Backend Connection
 
-## Notes
+The frontend seamlessly connects to the FastAPI backend via `lib/api.ts`:
 
-- No `localStorage`/browser storage is used for user profile data — only the
-  theme preference (light/dark) is persisted locally.
-- The language switcher currently translates hero/nav copy as a proof of
-  concept; wire it to Bhashini/Google Translate for full scheme-content
-  translation.
+- Reads `process.env.NEXT_PUBLIC_API_URL` (defaults to `http://localhost:8000`).
+- Calls `POST /api/profile` on intake form completion and routes to `/results?profileId=<uuid>`.
+- Calls `GET /api/match/{profileId}?language=<lang>` on the results dashboard.
+- Calls `POST /api/voice/parse-transcript` for AI speech-to-profile extraction.
+- Calls `GET /api/seva-kendras` to fetch nearest Common Service Centres.
+- Calls `GET /api/schemes/{scheme_id}` for scheme tutorials and YouTube application guides.
